@@ -1,0 +1,25 @@
+# Parametres de l'algorithme de passage des cerceaux (tellovision/guidance.py). Valeurs de depart, a regler en essai.
+confirm_frames: 3
+search_step_deg: 30
+search_pause_s: 0.5
+search_reach_tol_deg: 5.0
+search_total_deg: 380.0
+search_step_timeout_s: 4.0
+search_blind_pause_s: 1.5
+search_max_steps: 14
+approach_until_m: 2.0
+approach_step_m: 0.6
+standoff_m: 1.0
+margin_m: 0.7
+commit_max_dist_m: 1.4
+align_tol_lateral_m: 0.1
+align_tol_vertical_m: 0.1
+align_tol_yaw_deg: 8.0
+align_stable_s: 0.5
+traverse_speed_mps: 0.4
+traverse_extra_s: 1.0
+lost_continue_s: 1.5
+lost_return_s: 2.0
+passed_ignore_deg: 50.0
+max_hoops: 1
+phase_timeout_s: 25.0

@@ -1,0 +1,6 @@
+# Geometrie camera / drone, pour le passage repere camera -> repere drone.
+# convention "tello" (par defaut) : (avant, droite, haut), lacet > 0 = tourner a droite, comme les commandes rc.
+# convention "ros" : (x devant, y gauche, z haut), lacet > 0 = tourner a gauche.
+convention: tello
+camera_offset_m: [0.0, 0.0, 0.0]   # position de l'objectif / centre du drone, dans le repere ci-dessus (m) ; ~ +0.04 m vers l'avant
+camera_pitch_deg: 10.3             # > 0 si la camera regarde vers le bas. Mesure le 09/10 en vol : 10,3 deg (57 mesures a moins de 3 m)

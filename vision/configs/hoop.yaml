@@ -1,0 +1,5 @@
+# Dimensions du cerceau, utilisees par tellovision/pose.py pour passer de l'ellipse (pixels) au cercle 3D (metres).
+diameter_m: 0.68   # diametre exterieur mesure du cerceau violet
+# Remarque : les ellipses ont ete annotees sur l'anneau ; si elles suivent le MILIEU du tube plutot que
+# son bord exterieur, utiliser (diametre exterieur - epaisseur du tube), ex. 0.66 pour un tube de 2 cm.
+# Une erreur de 3 % sur ce diametre donne 3 % d'erreur sur toutes les distances.

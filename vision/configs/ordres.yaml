@@ -1,0 +1,45 @@
+# Recherche, mise en axe et ordre envoye au PC de controle (tellovision/ordres.py), a chaque image traitee.
+# delta_x, delta_z, distance_m : position 3D du cerceau (m, repere du drone, inclinaison camera corrigee) ;
+# r_yaw : degres absolus ;
+# r_z : cm absolus (repere de tello/status). Unites : s, deg, px, cm, m.
+
+min_p: 0.6                 # probabilite minimale d'une detection
+# ellipses pas credibles (main, manche, perche prises pour un morceau d'anneau) : detection ignoree.
+# Validation E3 : vrais cerceaux B/A >= 0,39 et couverture >= 0,43 (mediane 1,00) -> aucun vrai cerceau rejete.
+filtre_ba_min: 0.35        # ellipse plus plate que B/A = 0,35...
+filtre_ba_dist_m: 2.5      # ... ET cerceau estime a plus de 2,5 m
+filtre_couverture_min: 0.35  # moins de 35 % du contour de l'ellipse sur le masque "tube"
+grace_s: 0.5               # cerceau plus vu depuis moins de 0,5 s : present reste vrai (dernieres valeurs envoyees)
+pose_memo_s: 1.0           # pose 3D impossible (cerceau coupe) : position estimee avec la distance de moins de 1 s
+
+# confirmation sur plusieurs images (contre les faux positifs)
+confirm_n: 5               # cerceau retenu apres 5 detections consecutives coherentes (~0,35 s a 15 i/s)...
+confirm_cap_deg: 10.0      # ... cap absolu qui varie de moins de 10 deg d'une image a l'autre...
+confirm_dist_rel: 0.30     # ... et distance de moins de 30 % (une fois retenu : image incoherente ignoree)
+r_yaw_fige: true           # mise en axe : cap vers le centre du cerceau jusqu'a l'alignement, puis FIGE ; le correcteur X
+                           # du PC de controle corrige la derive avec delta_x (false : le cap suit le cerceau en permanence)
+r_yaw_fige_deg: 3.0        # aligne a 3 deg pres : le cap est fige
+r_yaw_mode: centre         # "centre" : cap vers le centre du cerceau ; "axe" : cap de l'axe du cerceau
+                           # (seulement si la pose 3D n'est pas ambigue, sinon "centre")
+
+# cerceau perdu
+retrouver_s: 2.0           # perdu de loin (PERDU) : dernier r_yaw tenu 2 s, puis recherche
+traversee_dist_m: 1.5      # perdu a moins de 1,5 m : le drone est en train de passer le cerceau (TRAVERSEE)...
+traversee_vitesse_ms: 0.4  # ... duree de la traversee = (derniere distance + marge) / vitesse d'avance (~0,4 m/s mesure)
+traversee_marge_m: 0.5     # ... le drone depasse le cerceau de 0,5 m...
+traversee_s: 4.0           # ... au plus 6 s ; puis NOUVELLE recherche (cerceau suivant), depuis la hauteur actuelle
+
+# RECHERCHE : paliers de cap, montee de 50 cm entre deux tours
+observe_s: 2.0             # au debut : regarder 2 s sur place avant de tourner
+search_z_start_cm: 120     # premier tour a 1,20 m au moins (camera inclinee : trop bas, le cerceau sort par le haut)
+search_step_deg: 30.0      # palier de rotation (champ horizontal de la camera : 55 deg)
+search_pause_s: 1.5        # pause sur chaque palier une fois atteint (image nette, retard de la vision)
+search_reach_deg: 5.0      # palier atteint a 5 deg pres...
+search_step_timeout_s: 4.0 # ... ou au bout de 4 s
+search_total_deg: 360.0    # un tour complet sans cerceau...
+search_climb_cm: 50.0      # ... on monte de 50 cm et on refait un tour...
+search_levels: 3           # ... au plus 3 tours (puis etat ECHEC)...
+search_z_max_cm: 200       # ... jamais au-dessus de 2 m (dernier tour plafonne)...
+search_z_min_cm: 60        # ... ni au-dessous de 60 cm
+search_climb_reach_cm: 10  # montee atteinte a 10 cm pres...
+search_climb_timeout_s: 6.0  # ... ou au bout de 6 s

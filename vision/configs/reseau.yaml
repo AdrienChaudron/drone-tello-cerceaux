@@ -1,0 +1,18 @@
+# Liaison MQTT avec le PC de controle (collegue). L'adresse du broker peut changer avec son point d'acces.
+broker_ip: 192.168.20.1       # PC du collegue (broker Mosquitto) ; "127.0.0.1" pour les tests avec tools/simulate_hil.py
+port: 1883
+username: tello              # le broker du collegue refuse les connexions anonymes
+password: tello
+client_id: tello_vision       # doit etre DIFFERENT de celui du PC de controle
+topic_video: tello/video      # images 480x360 JPEG + en-tete (frame_id, t, w, h, yaw, tof)
+topic_vision: tello/vision/ordre  # NOTRE PC -> PC de controle : ordre de la vision (send_vision / retrieve_vision, collegue/)
+
+# IHM web (web/frontend) : publie par NOTRE PC
+topic_view: tello/vision/view     # (plus publie par vision_node : l'IHM lit l'image en HTTP, port 8080)
+topic_state: tello/vision/state   # etat de la vision (JSON) : detection, position du cerceau, ordre envoye
+# publies par le PC de controle (collegue) : tello/status (batterie, hauteur, cap...), tello/safety (atterrissage force)
+
+# Hauteur "tof" de l'en-tete des images = 1,245 x la vraie hauteur (celle de tello/status et de sa boucle Z),
+# mesure le 09/10 sur 838 images. On la divise par ce facteur pour la consigne r_z de la recherche.
+# Remettre 1.0 quand le PC de controle enverra la meme hauteur que tello/status.
+tof_entete_facteur: 1.245

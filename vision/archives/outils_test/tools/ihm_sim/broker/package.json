@@ -1,0 +1,15 @@
+{
+  "name": "tello-sim-broker",
+  "private": true,
+  "description": "Broker MQTT de SIMULATION pour l'IHM (TCP 1885 + WebSocket 9001), sans droits administrateur",
+  "type": "module",
+  "main": "broker.js",
+  "scripts": {
+    "start": "node broker.js"
+  },
+  "packageManager": "yarn@4.14.1",
+  "dependencies": {
+    "aedes": "^1.2.0",
+    "aedes-server-factory": "^0.2.1"
+  }
+}

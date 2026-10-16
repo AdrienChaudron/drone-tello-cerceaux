@@ -1,0 +1,56 @@
+# Guidance NON HOLONOME (tellovision/unicycle.py) : avancer + tourner, jamais de cote (X = 0).
+# Valeurs par defaut ci-dessous ; modifier ici sans toucher au code. Unites : m, s, degres.
+
+confirm_frames: 3   # detections consecutives avant de suivre un cerceau
+min_p: 0.5   # probabilite minimale d'une detection
+# loi de guidance
+lookahead_m: 1.0   # L : distance de visee sur l'axe
+fov_keep_deg: 20.0   # cap vise a +- 20 deg du relevement du cerceau (champ camera +-27 deg)
+turn_first_deg: 25.0   # erreur de cap au-dela : tourner sur place avant d'avancer
+# AVANCE EN VITESSE : Y envoye = PUISSANCE rc d'avance (le PC de controle n'asservit pas Y)
+v_max_mps: 0.3   # vitesse d'avance maximale (moderee : plus de mesures par metre)
+v_first_mps: 0.15   # vitesse maximale tant que le cerceau est peu connu (moins de `n_obs_confident` mesures)
+n_obs_confident: 8   # nombre de mesures du cerceau avant d'avancer a `v_max_mps`
+v_gain: 0.8   # vitesse = 0,8 /s x distance restante jusqu'au point A : ralentit et s'annule en A
+accel_mps2: 0.3   # la vitesse commandee augmente d'au plus 0,3 m/s par seconde (freinage immediat)
+rc_par_mps: 50.0   # puissance rc d'avance pour 1 m/s (essai du 09/10 : rc ~27 -> 0,54 m/s ; a identifier)
+rc_max: 30   # puissance rc d'avance jamais depassee (en valeur absolue)
+standoff_m: 1.0   # point d'approche A : 1 m devant le cerceau, sur l'axe
+margin_m: 0.7   # traversee : jusqu'a 0,7 m derriere le cerceau (point B)
+commit_lat_m: 0.10   # alignement requis pour traverser : ecart lateral...
+commit_head_deg: 8.0   # ... ecart de cap ...
+commit_window_m: 0.35   # ... et distance au point A
+min_room_m: 0.6   # plus pres du plan sans etre aligne -> RECUL (un unicycle doit avancer pour corriger)
+recul_until_m: 1.6   # ... jusqu'a etre a nouveau a 1,6 m du plan (hysteresis : pas d'aller-retour)
+v_backup_mps: 0.3   # vitesse de recul (pas trop lente : la memoire se perime pendant le recul)
+v_creep_mps: 0.15   # vitesse minimale pour corriger l'ecart lateral quand on est deja vers A
+reacquire_m: 0.8   # apres 0,8 m a l'aveugle : se retourner vers le cerceau pour le re-mesurer
+# memoire
+alpha_pos: 0.35   # lissage de la position du centre (0 = fige, 1 = derniere mesure)
+alpha_axis: 0.25   # lissage du cap de l'axe
+outlier_m: 0.6   # mesure a plus de 0,6 m de la memoire : ignoree...
+outlier_confirm: 4   # ... sauf si 4 mesures de suite concordent (cerceau deplace, ou memoire fausse)
+memory_max_age_s: 6.0   # memoire perimee apres 6 s sans voir le cerceau...
+memory_max_travel_m: 2.5   # ... ou 2,5 m parcourus a l'aveugle
+retrouver_s: 5.0   # memoire perimee : 5 s pour se tourner vers sa position (et reculer si trop pres)...
+retrouver_dist_m: 1.4   # ... en reculant tant qu'elle le place a moins de 1,4 m ; sinon : RECHERCHE
+# traversee, recherche
+traverse_speed_mps: 0.3   # vitesse constante pendant la traversee
+traverse_time_factor: 1.3   # duree de traversee = distance / vitesse x 1,3 : franchit le cerceau meme si
+# le drone est 25 % plus lent que commande (depasse d'autant s'il est plus rapide)
+traverse_lookahead_m: 0.6   # traversee : correction de cap sur l'axe (memoire + estime)...
+traverse_max_corr_deg: 15.0   # ... bornee a +-15 deg
+traverse_extra_s: 1.0
+observe_s: 2.0   # au demarrage : regarder 2 s sur place avant de chercher (confirmer un cerceau deja en vue)
+search_step_deg: 30.0
+search_pause_s: 1.2
+search_total_deg: 380.0
+z_min_m: 0.4   # consigne de hauteur toujours entre 0,4...
+z_max_m: 2.0   # ... et 2 m (ToF)
+z_rate_mps: 0.15   # et variant d'au plus 0,15 m/s (le temps d'affiner l'estimation de pres)
+height_max_dist_m: 3.0   # hauteur du cerceau memorisee seulement s'il est vu a moins de 3 m
+search_climb_m: 0.5   # tour complet sans cerceau : on monte de 0,5 m et on refait un tour...
+search_levels: 3   # ... au plus 3 tours (hauteur de depart, +0,5 m, +1 m)...
+search_max_height_m: 2.0   # ... sans jamais viser plus de 2 m (ToF)
+search_climb_wait_s: 2.5   # temps laisse pour monter avant de reprendre la rotation
+max_hoops: 1

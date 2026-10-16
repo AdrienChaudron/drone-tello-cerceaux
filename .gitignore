@@ -1,0 +1,23 @@
+# Environnements et caches
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+node_modules/
+
+# Sauvegardes et fichiers temporaires
+*.bak
+*.old
+*.tmp
+.DS_Store
+
+# Donnees produites en vol ou a l'entrainement (seul le modele E3 est versionne)
+vision/logs/*
+!vision/logs/E3_segmentation480_couleur_0/
+vision/logs/E3_segmentation480_couleur_0/*
+!vision/logs/E3_segmentation480_couleur_0/best_model.pt
+!vision/logs/E3_segmentation480_couleur_0/config.yaml
+vision/captures/
+*.mp4
+*.avi

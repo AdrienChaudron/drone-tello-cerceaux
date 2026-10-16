@@ -1,0 +1,13 @@
+# Liaison MQTT de SIMULATION (IHM web) : broker local tools/ihm_sim/broker/broker.js, ports 1885 (MQTT) et 9001 (WebSocket).
+broker_ip: 127.0.0.1         # SIMULATION : broker local tools/ihm_sim/broker (sim_ihm.sh)
+port: 1885
+username: tello              # le broker du collegue refuse les connexions anonymes
+password: tello
+client_id: tello_vision       # doit etre DIFFERENT de celui du PC de controle
+topic_video: tello/video      # images 480x360 JPEG + en-tete (frame_id, t, w, h, yaw, tof)
+topic_vision: tello/vision/ordre  # NOTRE PC -> PC de controle : ordre de la vision (send_vision / retrieve_vision, collegue/)
+
+# IHM web (web/frontend) : publie par NOTRE PC
+topic_view: tello/vision/view     # (plus publie par vision_node : l'IHM lit l'image en HTTP, port 8080)
+topic_state: tello/vision/state   # etat de la vision (JSON) : detection, position du cerceau, ordre envoye
+# publies par le PC de controle (collegue) : tello/status (batterie, hauteur, cap...), tello/safety (atterrissage force)

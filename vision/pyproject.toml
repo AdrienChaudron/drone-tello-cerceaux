@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tellovision"
+version = "0.1.0"
+description = "Detection de cerceaux par CNN et guidage visuel pour drone Tello"
+requires-python = ">=3.10"
+dependencies = [
+    "torch",
+    "torchvision",
+    "opencv-python",
+    "numpy",
+    "pyyaml",
+    "tensorboard",
+    "djitellopy",
+    "paho-mqtt",
+]
+
+[tool.setuptools]
+packages = ["tellovision"]

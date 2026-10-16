@@ -1,0 +1,67 @@
+# Configuration de l'entrainement du detecteur de cerceaux (version ellipse).
+# Les chemins sont relatifs a la racine du projet (lancer les commandes depuis ~/Documents/tello).
+
+data:
+  root_dir: captures          # contient hoop/, no_hoop/, annotations.csv
+  input_size: [320, 240]      # largeur, hauteur donnees au reseau (4:3 comme la camera)
+  batch_size: 16
+  num_workers: 4
+  valid_ratio: 0.2
+  block_seconds: 5            # tranches de 5 s : toutes les images d'une tranche vont du meme cote
+  seed: 0
+  max_blockiness: 2.5         # au-dela, image corrompue (Wi-Fi) : gardee comme negatif, exclue des fonds
+  repeats:                    # "duplication" : nb de versions augmentees de chaque image par epoque
+    hoop: 1
+    no_hoop: 1
+
+augment:                      # p_* = probabilite d'appliquer la transformation
+  p_background: 0.0           # desactive : un decalage de quelques px de l'annotation donne un anneau "fantome"
+  ring_thickness: 0.05        # epaisseur de l'anneau decoupe, en fraction du grand axe
+  p_flip: 0.5                 # miroir horizontal
+  p_rotate: 0.6               # rotation simulee du drone (homographie K R K^-1, exacte pour l'ellipse)
+  max_yaw: 12                 # degres
+  max_pitch: 8
+  max_roll: 12
+  camera_yaml: configs/camera.yaml   # calibration ; si absente, focale deduite du champ de vision
+  fov_diag_deg: 82.6          # champ de vision diagonal du Tello (constructeur)
+  p_affine: 0.5               # zoom + decalage
+  scale: [0.6, 1.3]
+  translate: 0.15             # fraction de la taille de l'image
+  min_visible: 0.34           # part minimale du contour visible (regle : moins d'1/3 visible = image vide)
+  p_color: 0.8                # luminosite / contraste / saturation / teinte
+  brightness: 0.35
+  contrast: 0.3
+  saturation: 0.4
+  hue: 4                      # degres OpenCV (0-180), faible volontairement
+  p_motion_blur: 0.3          # flou de bouge du drone
+  blur_max: 11                # taille max du noyau (px)
+  p_noise: 0.3                # bruit du capteur
+  noise_std: 8
+  p_cutout: 0.3               # rectangle masque (occultation partielle)
+  cutout_max: 0.15            # cote max du rectangle, en fraction de l'image
+  p_jpeg: 0.5                 # compression du flux video Wi-Fi
+  jpeg_quality: [35, 80]
+
+model:
+  class: HoopNet              # HoopNet (backbone pre-entraine) ou SimpleCNN (appris de zero)
+  backbone: mobilenet_v3_small   # mobilenet_v3_small | mobilenet_v3_large | resnet18
+  pretrained: true
+  head_channels: 64
+  dropout: 0.3
+
+loss:
+  ellipse_weight: 5.0         # poids de la perte d'ellipse par rapport a la presence
+  angle_weight: 1.0           # poids de l'inclinaison dans la perte d'ellipse
+  pos_weight: 1.0             # > 1 : penalise plus les cerceaux manques
+
+optim:
+  lr: 0.001
+  backbone_lr_mult: 0.1       # le backbone pre-entraine apprend 10x plus lentement que la tete
+  weight_decay: 0.0001
+
+nepochs: 50
+patience: 12                  # arret si la perte de validation ne s'ameliore plus pendant 12 epoques
+
+logging:
+  logdir: logs
+  run_name: E0_regression320
