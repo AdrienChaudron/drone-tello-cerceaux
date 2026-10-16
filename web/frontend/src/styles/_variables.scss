@@ -1,0 +1,21 @@
+// Palette du poste de pilotage (theme sombre : lisible en salle, l'image ressort)
+$bg: #0e1116;
+$panel: #161a21;
+$panel-head: #1b2029;
+$border: #283040;
+$text: #e5e8ee;
+$muted: #8a93a3;
+
+$accent: #39b8ff;   // vision / alignement
+$info: #6f9dff;
+$ok: #37c978;
+$warn: #f0b23c;
+$danger: #ef4d4d;
+$violet: #a77bff;
+
+$radius: 10px;
+$gap: 14px;
+$font: system-ui, 'Segoe UI', Roboto, sans-serif;
+$mono: ui-monospace, 'DejaVu Sans Mono', Consolas, monospace;
+
+$status-colors: ('ok': $ok, 'warn': $warn, 'danger': $danger, 'info': $info, 'accent': $accent, 'violet': $violet);

@@ -1,0 +1,135 @@
+Contsid Toolbox version 7.6 for Matlab
+Version 7.6 - 19 February 2026
+
+Note that the CONTSID toolbox can be considered as an add-on to the System
+Identification (SID) toolbox and requires the presence of the SID and 
+Control toolboxes in order to run.
+
+------------------------
+Updates for version v7.6
+------------------------
+* The toolbox is now compatible with the 2025a version of Matlab.
+
+* Compatibility update
+- Recent MATLAB releases no longer expose the internal iddata property .nu.
+
+CONTSID has been updated to use documented accessors (e.g., InputDimension), ensuring full compatibility without affecting algorithmic behavior.
+
+* The CONTSID GUI has been updated for MATLAB 2025a compatibility, including improved file path handling, enhanced robustness for example data loading, refined model validation display (including pole-zero maps with delays)
+
+
+------------------------
+Updates for version v7.5
+------------------------
+* The toolbox is now compatible with the 2024a version of Matlab.
+
+* Minor bugs have been corrected
+- SSLSGPMF, SSIVGPMF, SSBCGPMF, SIDGPMF, SIDLIF, SIDRPM,SIDHMF, SIDFMF: the model is indicated as continuous-time when displays by the call of present
+
+- call to idplot in some tutorial demos have been corrected to take into account changes in the call of the routine 
+
+- New version of the mex files have been generated for Mac and Intel processors with Matlab 2024a
+
+* The contsid_tutorial1 demo makes now use of the TFSRIVC routine instead of SRIVC
+
+------------------------
+Updates for version v7.4
+------------------------
+* The major update for this 7.4 version of the CONTSID toolbox is the release of a new graphical user interface (GUI) which can be run by typing in the command window:
+contsid_gui
+
+% Some real-life data have been added to be used with the new GUI
+- data_step_TCLAB_gui.mat % successive positive and negative step response
+- data1_TCLAB_gui.mat % first PRBS input response
+- data3_TCLAB_gui.mat % second PRBS input response for cross-validation purpose
+
+* The toolbox now includes updated version of the transfer function plus delay SRIVC/RIVC-based estimation schemes which can now handle multi-input single output (MISO) systems:
+- TFSRIVC
+- TFRIVC
+A new demo has been added to illustrate the new features (see advanced identification menu) or type in the command window
+contsid_TFRIVC_MISO
+
+* The toolbox also includes a new routine to search for the best transfer function model structure amongst a range of possible orders. This routine is used in the new GUI
+- TFSRIVCSTRUC
+
+* Some changes have also been made to the related routines
+- SRIVCSTRUC
+- SELCSTRUC
+- MKSTABLE 
+
+------------------------
+Updates for version v7.3 
+------------------------
+The following recursive parameter estimation routines for identifying slowly linear time-varying (LTV) continuous-time models have been updated:
+- RLSSVF: recursive least squares-based SVF
+- RIVSVF: recursive instrumental variable-based SVF
+- RSRIVC: recursive simplified refined instrumental variable for continuous-time models
+
+The following SRIVC-based parameter estimation routine for identifying transfer function models + delay have been updated and renamed:
+- TDSRIVC has been replaced by TFSRIVC
+
+The toolbox now includes a new PEM-based frequency domain routine for identifying continuous-time transfer function models with time-delay from relay feedback tests :
+- Time-delay continuous-time output error: TFFCOE
+
+New demos have been added to illustrate the new features (see advanced identification menu)
+
+The main demonstration program can be run by typing in the command window:
+CONTSID_DEMO
+
+
+------------------------
+Updates for version v7.2 
+------------------------
+The toolbox now includes updated version of recursive parameter estimation schemes for identifying slowly linear time-varying (LTV) continuous-time models:
+- RLSSVF: recursive least squares-based SVF
+- RIVSVF: recursive instrumental variable-based SVF
+- RSRIVC: recursive simplified refined instrumental variable for continuous-time models
+
+The following SRIVC-based parameter estimation routines have been also updated:
+- PROCSRIVC for identifying simple process models + delay
+- TDSRIVC for identifying transfer function models + delay
+
+The toolbox now includes a new PEM (OE)-based parameter estimation routine for identifying transfer function models plus delay:
+- Time-delay continuous-time output error: TDCOE
+New demos have been added to illustrate the new features (see advanced identification menu)
+
+The main demonstration program has been renamed
+- IDCDEMO.M has been replaced by CONTSID_DEMO.M
+
+The toolbox now includes mex files to be used on Linux machine in the case of irregularly sampled data
+
+
+------------------------
+Updates for version v7.1 
+------------------------
+- Several bugs have been fixed for MISO transfer function model identification
+- Model order selection by using srivcstruc and selcstruc has been improved
+- Minor typos in some routine helps have been corrected
+
+------------------------
+Updates for version v7.0 
+------------------------
+
+The toolbox is now compatible with the latest version of Matlab.
+
+Version 7.0 can now identify linear transfer function model from frequency 
+domain data: see SRIVC
+
+It includes new SRIVC-based parameter estimation schemes for identifying:
+- simple process models: PROCSRIVC
+- time-delay models: TDSRIVC
+- time-varying parameter (TVP) models: see RSRIVC
+- heat diffusion PDE models: see PDESRIVC4HEATDIFFUSION
+
+The demonstration programs have been entirely rewritten: 
+- run IDCDEMO in the command window
+
+
+-----------------------------------------------------------------------
+ Copyright (c) 2026 by the Centre de Recherche en Automatique de Nancy (CRAN) 
+ France.
+-----------------------------------------------------------------------
+ Hugues GARNIER
+ e-mail: hugues.garnier@univ-lorraine.fr
+	
+-----------------------------------------------------------------------

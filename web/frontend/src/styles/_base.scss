@@ -1,0 +1,20 @@
+@use 'variables' as *;
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body, #root { height: 100%; }
+
+body {
+  margin: 0;
+  background: $bg;
+  color: $text;
+  font: 15px/1.45 $font;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 { margin: 0; font-weight: 600; }
+
+.muted { color: $muted; }
+.mono { font-family: $mono; font-variant-numeric: tabular-nums; }
+.footnote { margin: 10px 0 0; font-size: 12.5px; color: $muted; }
+.subhead { margin: 14px 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: $muted; }

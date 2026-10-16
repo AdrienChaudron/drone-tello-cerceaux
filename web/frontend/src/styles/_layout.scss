@@ -1,0 +1,36 @@
+@use 'variables' as *;
+
+.app { display: flex; flex-direction: column; min-height: 100%; }
+
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  padding: 12px 18px; border-bottom: 1px solid $border; background: $panel;
+
+  &__title { display: flex; align-items: center; gap: 10px; }
+  &__logo { color: $accent; font-size: 22px; }
+  h1 { font-size: 17px; }
+  &__links { display: flex; gap: 8px; flex-wrap: wrap; }
+}
+
+.layout {
+  flex: 1; display: grid; gap: $gap; padding: $gap; align-items: start;
+  // gauche : camera + modele 3D | centre : courbes | droite : drone, vision, securite
+  grid-template-columns: minmax(380px, 520px) minmax(0, 1fr) 360px;
+  grid-template-areas: 'left center side';
+
+  &__left, &__center, &__side { display: flex; flex-direction: column; gap: $gap; min-width: 0; }
+  &__left { grid-area: left; }
+  &__center { grid-area: center; }
+  &__side { grid-area: side; }
+
+  // Ecran moyen : les panneaux de droite passent sous les courbes
+  @media (max-width: 1400px) {
+    grid-template-columns: minmax(360px, 460px) minmax(0, 1fr);
+    grid-template-areas: 'left center' 'side center';
+  }
+  // Ecran etroit : une seule colonne
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'left' 'center' 'side';
+  }
+}

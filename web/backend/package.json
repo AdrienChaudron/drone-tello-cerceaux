@@ -1,0 +1,15 @@
+{
+  "name": "backend",
+  "packageManager": "yarn@4.14.1",
+  "description": "Node.js service archiving Tello MQTT telemetry into MariaDB and serving via REST API",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^4.19.2",
+    "mariadb": "^3.3.0",
+    "mqtt": "^5.5.0"
+  }
+}
