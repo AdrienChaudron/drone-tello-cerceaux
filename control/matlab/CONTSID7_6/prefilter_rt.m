@@ -1,3 +1,0 @@
-% dtEquiv : discrete-time equivalent
-
-
