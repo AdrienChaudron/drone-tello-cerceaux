@@ -9,6 +9,6 @@ Le projet tourne sur deux ordinateurs reliés en Ethernet, qui échangent par MQ
 | Vision | [`vision/`](vision/) | reçoit la vidéo du drone, détecte le cerceau (CNN de segmentation), calcule sa position 3D et décide quoi faire (recherche, mise en axe, traversée) |
 | Contrôle | *(à venir)* | asservit les axes du drone (hauteur, lacet, X, avance) et lui envoie les commandes moteur ; héberge le broker MQTT et l'IHM web |
 
-Article complet du projet : *(lien à ajouter)*.
+Article complet du projet : [docs/Article_vol_autonome_drone_Tello.pdf](docs/Article_vol_autonome_drone_Tello.pdf).
 
 Auteurs : Adrien Chaudron (vision) et Samuel Stef (contrôle).
